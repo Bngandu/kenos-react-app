@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  /* Two-tone: Dark hero + alternating light/dark sections */
+  --color-primary: #1a3355;
+  --color-primary-dark: #0f2240;
+  --color-primary-light: #2a4a7a;
+  --color-secondary: #d4af37;
+  --color-secondary-dark: #b8960c;
+  --color-secondary-light: #f0d060;
+  --color-accent: #7a2e4a;
+  --color-surface: #f7f4ee;
+  --color-surface-dark: #ede8df;
+  --color-dark: #0c1a2e;
+  --color-gold: #d4af37;
+  --color-cream: #faf8f2;
+  --color-warm: #f9f6f0;
+  --color-navy: #142d4c;
+  --font-family-heading: "Playfair Display", Georgia, serif;
+  --font-family-sans: "Inter", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background: #faf8f2;
+  color: #2c3e50;
+}
+
+/* Swiper overrides */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #d4af37 !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 24px !important;
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(135deg, #d4af37 0%, #f0d060 50%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dark section gradient text */
+.text-gradient-dark {
+  background: linear-gradient(135deg, #1a3355 0%, #2a4a7a 50%, #1a3355 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass effect - for dark sections */
+.glass {
+  background: rgba(15, 34, 64, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+/* Glass effect - for light sections */
+.glass-light {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(26, 51, 85, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* Glow effect */
+.glow-gold {
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.12), 0 0 80px rgba(212, 175, 55, 0.04);
+}
+
+/* Card shadow for light sections */
+.card-shadow {
+  box-shadow: 0 4px 20px rgba(26, 51, 85, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f7f4ee;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c9a961;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1a3355;
+}
