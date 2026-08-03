@@ -57,7 +57,7 @@ export default function BooksCarousel() {
           effect="coverflow"
           grabCursor={true}
           centeredSlides={true}
-          slidesPerView={3}
+          slidesPerView={1.4}
           loopAdditionalSlides={3}
           loop={true}
           speed={3000}
@@ -74,6 +74,10 @@ export default function BooksCarousel() {
             pauseOnMouseEnter: true,
           }}
           navigation={true}
+          breakpoints={{
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
           className="overflow-hidden"
           onSwiper={(swiper) => {
             setTimeout(() => {
@@ -93,7 +97,7 @@ export default function BooksCarousel() {
                   <img
                     src={book.image}
                     alt={book.title}
-                    className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-[280px] md:h-[350px] lg:h-[400px] object-cover group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent" />
