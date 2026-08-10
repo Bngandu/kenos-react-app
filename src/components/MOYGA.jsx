@@ -32,7 +32,6 @@ export default function MOYGA() {
           viewport={{ once: true }}
           className="max-w-3xl mx-auto glass rounded-2xl p-8 mb-14 relative"
         >
-          <div className="absolute top-0 left-8 w-10 h-[2px] bg-gold" />
           <p className="italic text-white/60 leading-relaxed font-light text-sm mt-2">
             &ldquo;I wonder if you have the courage, tonight, to meet me here at
             the altar... To see these young women coming, weeping, life before
@@ -40,7 +39,6 @@ export default function MOYGA() {
             has ten times the temptation you had when you was a girl?&rdquo;
           </p>
           <div className="flex items-center gap-3 mt-4">
-            <div className="w-6 h-[1px] bg-gold/40" />
             <cite className="text-gold/70 text-xs not-italic font-medium">
               Rev. William Marrion Branham, &ldquo;A Blushing Prophet&rdquo;
             </cite>
@@ -112,7 +110,6 @@ export default function MOYGA() {
                     {quote.text}
                   </p>
                   <div className="flex items-center gap-2 mt-4 pt-3 border-t border-white/5">
-                    <div className="w-4 h-[1px] bg-gold/40" />
                     <cite className="text-gold/70 text-[11px] not-italic font-medium">
                       {quote.source}
                     </cite>

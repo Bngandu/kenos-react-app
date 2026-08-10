@@ -10,7 +10,7 @@ const iconMap = {
 
 export default function Welcome() {
   return (
-    <section className="relative py-24 bg-cream overflow-hidden">
+    <section id="welcome" className="relative py-24 bg-cream overflow-hidden">
       {/* Subtle decorative */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
       <div className="absolute top-20 right-0 w-72 h-72 bg-secondary/5 rounded-full blur-3xl" />
@@ -84,15 +84,17 @@ export default function Welcome() {
           <div className="absolute top-0 left-8 w-12 h-[2px] bg-gold" />
           <p className="italic text-primary/70 leading-relaxed text-base font-light mt-2">
             &ldquo;In the beginning when man used to walk in the early age with God
-            in the garden of Eden... God longs for fellowship. He yearns, He
-            wants people to speak with Him, to talk with Him. You might sing too
-            much, or you might preach too much, sometime, but there&rsquo;s one
+            in the garden of Eden, when the first man was created in the great
+            cathedrals, under the palms, he and his wife, when the cool of the
+            evening come along, they come out and worshipped God, had a perfect
+            fellowship. God longs for fellowship. He yearns, He wants people to
+            speak with Him, to talk with Him. You might do one&hellip;You might sing
+            too much, or you might preach too much, sometime, but there&rsquo;s one
             thing you&rsquo;ll never be able to overdo, that&rsquo;s pray.&rdquo;
           </p>
           <div className="flex items-center gap-3 mt-6">
-            <div className="w-6 h-[1px] bg-gold" />
-            <cite className="text-gold text-sm not-italic font-medium">
-              Rev. William Marrion Branham
+            <cite className="text-gold text-xs not-italic font-medium tracking-wide uppercase">
+              56-0120 &mdash; &ldquo;Fellowship With God Through Reconciliation&rdquo;
             </cite>
           </div>
         </motion.blockquote>

@@ -54,7 +54,6 @@ export default function KIOFM() {
           viewport={{ once: true }}
           className="max-w-3xl mx-auto bg-white rounded-2xl p-8 mb-16 relative card-shadow border border-primary/5"
         >
-          <div className="absolute top-0 left-8 w-10 h-[2px] bg-gold" />
           <p className="italic text-primary/60 leading-relaxed font-light text-sm mt-2">
             &ldquo;We are at the end time. And that&rsquo;s where we are standing
             today, a universal revival. It&rsquo;s the sign of the coming of the
@@ -62,7 +61,6 @@ export default function KIOFM() {
             been preached into every nation.&rdquo;
           </p>
           <div className="flex items-center gap-3 mt-4">
-            <div className="w-6 h-[1px] bg-gold" />
             <cite className="text-gold text-xs not-italic font-medium">
               Rev. William Marrion Branham, &ldquo;The Time Is At Hand&rdquo;
             </cite>
@@ -95,8 +93,8 @@ export default function KIOFM() {
         </div>
 
         {/* Giving section */}
+        <div id="giving">
         <motion.div
-          id="giving"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -115,14 +113,36 @@ export default function KIOFM() {
               participate for the advancement of the Kingdom by financially
               supporting and by praying for us.
             </p>
-            <div className="inline-block glass rounded-xl px-6 py-4">
-              <p className="text-gold font-semibold text-sm mb-1">Online Giving</p>
-              <p className="text-white/40 text-xs">
-                Contact us for giving options and more information.
-              </p>
+            <div className="inline-block glass rounded-xl px-8 py-6 text-left">
+              <p className="text-gold font-semibold text-sm mb-4 text-center">Banking Details</p>
+              <table className="text-sm">
+                <tbody>
+                  <tr>
+                    <td className="text-white/50 pr-4 py-1 font-light">Bank</td>
+                    <td className="text-white font-medium py-1">NEDBANK</td>
+                  </tr>
+                  <tr>
+                    <td className="text-white/50 pr-4 py-1 font-light">Branch Code</td>
+                    <td className="text-white font-medium py-1">198765</td>
+                  </tr>
+                  <tr>
+                    <td className="text-white/50 pr-4 py-1 font-light">Account Number</td>
+                    <td className="text-white font-medium py-1">1010151118</td>
+                  </tr>
+                  <tr>
+                    <td className="text-white/50 pr-4 py-1 font-light">Account Type</td>
+                    <td className="text-white font-medium py-1">SAVING</td>
+                  </tr>
+                  <tr>
+                    <td className="text-white/50 pr-4 py-1 font-light">Account Owner</td>
+                    <td className="text-white font-medium py-1">Daviz Muzinga Midima</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </motion.div>
+        </div>
       </div>
     </section>
   );

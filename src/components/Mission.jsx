@@ -49,7 +49,6 @@ export default function Mission() {
                   {quote.text}
                 </p>
                 <div className="flex items-center gap-3 mt-6 pt-4 border-t border-white/5">
-                  <div className="w-6 h-[1px] bg-gold/40" />
                   <cite className="text-gold/80 text-xs not-italic font-medium">
                     {quote.source}
                   </cite>

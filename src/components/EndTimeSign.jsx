@@ -53,11 +53,9 @@ export default function EndTimeSign() {
           </p>
           
           <div className="flex items-center justify-center gap-3 mt-8">
-            <div className="w-8 h-[1px] bg-gold/50" />
             <cite className="text-gold text-sm not-italic font-semibold tracking-wide">
               Rev. William Marrion Branham
             </cite>
-            <div className="w-8 h-[1px] bg-gold/50" />
           </div>
           <p className="text-white/30 text-xs mt-2 italic">
             &ldquo;The End-Time Sign Seed&rdquo;

@@ -24,25 +24,12 @@ export default function Hero() {
       <div className="absolute bottom-40 left-20 w-px h-32 bg-gradient-to-b from-transparent via-gold/20 to-transparent hidden lg:block" />
 
       {/* Content */}
-      <div className="relative z-10 text-center max-w-5xl px-6 py-20">
-        {/* Small tag */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold/30 bg-gold/5 mb-8"
-        >
-          <div className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-          <span className="text-gold/90 text-xs tracking-[0.2em] uppercase font-medium">
-            Est. 2004 • Cape Town, South Africa
-          </span>
-        </motion.div>
-
+      <div className="relative z-10 text-center max-w-5xl px-6 py-12">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight leading-[0.9]"
+          className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold mb-2 tracking-tight leading-[0.9]"
         >
           <span className="text-white">Kenos</span>
           <br />
@@ -53,19 +40,21 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="text-white/40 text-sm tracking-[0.15em] uppercase mb-2"
+          className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-2"
         >
           Ministry New Horizon
         </motion.p>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="text-white/30 text-xs mb-12"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold/30 bg-gold/5 mb-12"
         >
-          Registration Number 120 - 477 NPO
-        </motion.p>
+          <span className="text-gold/90 text-xs tracking-[0.2em] uppercase font-medium">
+            REGISTRATION NUMBER 120 - 477 NPO
+          </span>
+        </motion.div>
 
         {/* Quote */}
         <motion.blockquote
@@ -74,7 +63,6 @@ export default function Hero() {
           transition={{ delay: 0.8, duration: 0.8 }}
           className="glass rounded-2xl p-8 md:p-10 max-w-3xl mx-auto mb-12 text-left glow-gold"
         >
-          <div className="w-10 h-[2px] bg-gold mb-6" />
           <p className="text-white/80 text-base md:text-lg leading-relaxed font-light italic">
             &ldquo;But, in the evening time, &lsquo;It shall be Light,&rsquo; He said,
             &lsquo;in the evening time.&rsquo; And no Scripture can be broken. And the
@@ -82,7 +70,6 @@ export default function Hero() {
             Pentecost, promised to do the same thing in the evening time.&rdquo;
           </p>
           <div className="flex items-center gap-3 mt-6">
-            <div className="w-8 h-[1px] bg-gold/50" />
             <cite className="text-gold text-sm not-italic font-medium tracking-wide">
               Rev. William Marrion Branham
             </cite>
@@ -122,8 +109,8 @@ export default function Hero() {
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
-        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
+        className="absolute bottom-1 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-20"
+        onClick={() => document.querySelector("#welcome")?.scrollIntoView({ behavior: "smooth" })}
       >
         <span className="text-white/30 text-[10px] tracking-[0.3em] uppercase">Scroll</span>
         <FaChevronDown className="text-gold/60 text-sm" />

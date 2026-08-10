@@ -42,7 +42,6 @@ export default function Hofmann() {
                   &ldquo;{quote.text}&rdquo;
                 </p>
                 <div className="flex items-center gap-3 mt-5">
-                  <div className="w-6 h-[1px] bg-gold" />
                   <cite className="text-gold text-xs not-italic font-medium tracking-wide uppercase">
                     {quote.source}
                   </cite>

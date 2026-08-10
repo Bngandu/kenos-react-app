@@ -26,7 +26,7 @@ export default function Footer() {
               Message preached by the Prophet William Branham.
             </p>
             <p className="text-gold/50 italic text-xs mt-4 font-heading">
-              &ldquo;The Inspired Hill&rdquo;
+              Est. 2004 - CapeTown - SA
             </p>
           </div>
 

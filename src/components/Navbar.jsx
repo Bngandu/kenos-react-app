@@ -39,7 +39,8 @@ export default function Navbar() {
       const el = document.querySelector(href);
       if (el) {
         const offset = 80;
-        window.scrollTo({ top: el.offsetTop - offset, behavior: "smooth" });
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
       }
     }
     setIsOpen(false);
@@ -70,7 +71,7 @@ export default function Navbar() {
               Kenos Tabernacle
             </h1>
             <p className="text-gold/80 text-[10px] tracking-[0.3em] uppercase font-light">
-              The Inspired Hill
+              Est. 2004 - CapeTown - SA
             </p>
           </div>
         </a>
@@ -100,21 +101,23 @@ export default function Navbar() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-full left-0 mt-3 glass rounded-xl overflow-hidden min-w-[200px] shadow-2xl"
+                  className="absolute top-full left-0 pt-2 min-w-[200px]"
                 >
-                  {link.dropdown.map((item) => (
-                    <li key={item.label}>
-                      <a
-                        href={item.href}
-                        target={item.external ? "_blank" : undefined}
-                        rel={item.external ? "noopener noreferrer" : undefined}
-                        onClick={(e) => !item.external && handleLinkClick(e, item.href)}
-                        className="block px-5 py-3.5 text-white/70 hover:text-gold hover:bg-white/5 transition-all text-sm tracking-wide"
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  ))}
+                  <div className="glass rounded-xl overflow-hidden shadow-2xl">
+                    {link.dropdown.map((item) => (
+                      <li key={item.label}>
+                        <a
+                          href={item.href}
+                          target={item.external ? "_blank" : undefined}
+                          rel={item.external ? "noopener noreferrer" : undefined}
+                          onClick={(e) => !item.external && handleLinkClick(e, item.href)}
+                          className="block px-5 py-3.5 text-white/70 hover:text-gold hover:bg-white/5 transition-all text-sm tracking-wide"
+                        >
+                          {item.label}
+                        </a>
+                      </li>
+                    ))}
+                  </div>
                 </motion.ul>
               )}
             </li>
