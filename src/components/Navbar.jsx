@@ -36,15 +36,20 @@ export default function Navbar() {
   const handleLinkClick = (e, href) => {
     if (href.startsWith("#")) {
       e.preventDefault();
-      const el = document.querySelector(href);
-      if (el) {
-        const offset = 80;
-        const top = el.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: "smooth" });
-      }
+      setIsOpen(false);
+      setActiveDropdown(null);
+      setTimeout(() => {
+        const el = document.querySelector(href);
+        if (el) {
+          const offset = 80;
+          const top = el.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+      }, 300);
+    } else {
+      setIsOpen(false);
+      setActiveDropdown(null);
     }
-    setIsOpen(false);
-    setActiveDropdown(null);
   };
 
   return (

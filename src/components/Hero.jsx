@@ -24,7 +24,7 @@ export default function Hero() {
       <div className="absolute bottom-40 left-20 w-px h-32 bg-gradient-to-b from-transparent via-gold/20 to-transparent hidden lg:block" />
 
       {/* Content */}
-      <div className="relative z-10 text-center max-w-5xl px-6 py-12">
+      <div className="relative z-10 text-center max-w-5xl px-6 pt-24 pb-12">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
