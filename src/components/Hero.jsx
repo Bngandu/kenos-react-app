@@ -94,9 +94,11 @@ export default function Hero() {
             Discover More
           </a>
           <a
-            href="https://www.youtube.com/@kenostabernacle2004"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#media"
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelector("#media")?.scrollIntoView({ behavior: "smooth" });
+            }}
             className="group flex items-center justify-center gap-3 px-8 py-4 border border-white/20 text-white rounded-full hover:border-gold hover:text-gold transition-all hover:scale-105 text-sm uppercase tracking-wide"
           >
             <FaPlay className="text-xs" />

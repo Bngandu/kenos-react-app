@@ -15,7 +15,7 @@ const navLinks = [
     label: "Media",
     href: "#media",
     dropdown: [
-      { label: "YouTube", href: "https://www.youtube.com/@kenostabernacle2004", external: true },
+      { label: "Videos", href: "#media" },
       { label: "Gallery", href: "#gallery" },
     ],
   },

@@ -1,7 +1,7 @@
 # Kenos Tabernacle Ministry — Website Administration & Handover Guide
 
-**Document Version:** 1.0  
-**Date:** August 2026  
+**Document Version:** 1.1  
+**Date:** October 2026  
 **Prepared by:** Billy Ngandu  
 **Website:** https://ktmnewhorizon.co.za  
 **GitHub Repository:** https://github.com/Bngandu/kenos-react-app
@@ -18,10 +18,11 @@
 6. Making Changes to the Website
 7. Deployment Process
 8. Domain & DNS Management
-9. Important Credentials & Access
-10. Troubleshooting
-11. Future Improvements
-12. Contact & Handover Notes
+9. Email (Zoho Mail)
+10. Important Credentials & Access
+11. Troubleshooting
+12. Future Improvements
+13. Contact & Handover Notes
 
 ---
 
@@ -286,11 +287,15 @@ The domain `ktmnewhorizon.co.za` is registered through AWS Route 53.
 
 ### DNS Records (Route 53)
 
+Website + certificate records:
+
 | Type | Name | Value |
 |------|------|-------|
 | A | ktmnewhorizon.co.za | Alias → CloudFront distribution |
 | A | www.ktmnewhorizon.co.za | Alias → CloudFront distribution |
 | CNAME | (validation) | ACM certificate validation |
+
+Email records are also in this zone, see **Section 9.3 (Email / Zoho Mail)** for MX, SPF, DKIM, and DMARC. Website and email records coexist safely in the same hosted zone.
 
 ### Domain Renewal
 
@@ -298,7 +303,72 @@ The domain will need to be renewed periodically. Check Route 53 → Registered d
 
 ---
 
-## 9. Important Credentials & Access
+## 9. Email (Zoho Mail)
+
+The church uses **Zoho Mail** (Forever Free plan) to provide custom email addresses on the `@ktmnewhorizon.co.za` domain. This is completely separate from the website, email and website hosting share only the domain name. Changing one does not affect the other.
+
+### 9.1 Plan & Account
+
+- **Provider:** Zoho Mail — https://www.zoho.com/mail/
+- **Plan:** Forever Free (up to 5 mailboxes, 5 GB each, 1 domain, webmail + mobile app)
+- **Data center:** US (determines server hostnames below)
+- **Admin console:** https://mailadmin.zoho.com
+- **Webmail:** https://mail.zoho.com
+- **Super Administrator mailbox:** `info@ktmnewhorizon.co.za`
+- **Cost:** $0/month on the free plan
+
+> The `info@` mailbox is the Super Administrator. It owns the whole mail setup, keep its password safe and recorded. Losing it means losing admin control of the mail.
+
+### 9.2 Mailboxes
+
+| Address | Purpose |
+|---------|---------|
+| info@ktmnewhorizon.co.za | Main public contact + Super Admin |
+| (add pastor@, admin@, etc. as needed, 5 free) | Additional mailboxes / aliases |
+
+Add or manage mailboxes in the Zoho Admin Console → **Users**. You can also create **aliases** (extra addresses that drop into an existing inbox) for free, e.g. point `contact@` into `info@`.
+
+### 9.3 DNS Records (in Route 53)
+
+All email records live in the same hosted zone as the website (`ktmnewhorizon.co.za`). They do not conflict with the website's A records.
+
+| Name / Host | Type | Value | Purpose |
+|-------------|------|-------|---------|
+| (root / blank) | MX | `10 mx.zoho.com`, `20 mx2.zoho.com`, `50 mx3.zoho.com` | Routes incoming mail to Zoho |
+| (root / blank) | TXT | `zoho-verification=zb10937497.zmverify.zoho.com` | Domain ownership verification |
+| (root / blank) | TXT | `v=spf1 include:zoho.com ~all` | SPF — authorizes Zoho to send on your behalf |
+| `zmail._domainkey` | TXT | `v=DKIM1; k=rsa; p=MIGf...QIDAQAB` (1024-bit key from Zoho) | DKIM — cryptographic signing, anti-spoofing |
+| `_dmarc` | TXT | `v=DMARC1; p=quarantine; rua=mailto:info@ktmnewhorizon.co.za; fo=1` | DMARC — policy + reports for failed mail |
+
+Notes:
+- The two root TXT records (verification + SPF) must live in **one** Route 53 TXT record, as two quoted lines. Route 53 does not allow two separate TXT records with the same name.
+- The DKIM selector is `zmail` (1024-bit key chosen so the value fits in a single DNS TXT string).
+- The full DKIM key value is stored in Zoho (Admin Console → Domains → `ktmnewhorizon.co.za` → Email Configuration → DKIM). Regenerate there if ever needed.
+
+### 9.4 Reading & Replying to Mail
+
+Three ways to access mail sent to `info@` (or any mailbox):
+
+1. **Webmail (easiest):** https://mail.zoho.com, log in with the address and password.
+2. **Mobile app:** install "Zoho Mail" (App Store / Play Store), log in. Push notifications.
+3. **Pull into existing Gmail (optional):** since the church already uses Gmail, you can receive and reply to the Zoho address from inside Gmail:
+   - Gmail → Settings → Accounts and Import → **Check mail from other accounts** → add the Zoho address via POP (`pop.zoho.com`, port 995, SSL).
+   - Gmail → Settings → Accounts → **Send mail as** → add the Zoho address via SMTP (`smtp.zoho.com`, port 465, SSL), so replies go out as `info@ktmnewhorizon.co.za`.
+
+### 9.5 Verifying Setup
+
+In the Zoho Admin Console the domain should show MX, SPF, and DKIM all verified (1/1). DKIM verification can lag 30–40 minutes after the DNS record is added, this is normal, just click **Verify** again later. Mail works as soon as MX + SPF are verified; DKIM only improves deliverability.
+
+### 9.6 Email Troubleshooting
+
+- **Not receiving mail:** confirm MX records point to Zoho (`dig MX ktmnewhorizon.co.za`) and the mailbox exists in the Admin Console.
+- **DKIM won't verify:** the record is correct but Zoho's verifier is lagging, wait 30–40 min and retry. Do not regenerate the key (that resets the clock).
+- **Mail landing in spam:** ensure SPF, DKIM, and DMARC are all verified.
+- **Forgot admin password:** reset via https://accounts.zoho.com using the recovery email/phone on the account.
+
+---
+
+## 10. Important Credentials & Access
 
 ### AWS Account
 
@@ -312,6 +382,12 @@ The domain will need to be renewed periodically. Check Route 53 → Registered d
 - **Account:** Bngandu
 - **Repository:** https://github.com/Bngandu/kenos-react-app
 
+### Zoho Mail
+
+- **Admin console:** https://mailadmin.zoho.com
+- **Super Admin mailbox:** info@ktmnewhorizon.co.za
+- **Plan:** Forever Free
+
 ### Services Used (Monthly Cost)
 
 | Service | Cost |
@@ -319,12 +395,13 @@ The domain will need to be renewed periodically. Check Route 53 → Registered d
 | S3 (storage + requests) | ~$0.50/month |
 | CloudFront (free tier) | $0/month |
 | Route 53 (hosted zone) | $0.50/month |
+| Zoho Mail (Forever Free plan) | $0/month |
 | Domain renewal | ~$15/year |
 | **Total** | **~$1-2/month** |
 
 ---
 
-## 10. Troubleshooting
+## 11. Troubleshooting
 
 ### Site shows blank page after deployment
 - You likely uploaded the wrong `index.html` (from project root instead of `dist/`)
@@ -350,7 +427,7 @@ The domain will need to be renewed periodically. Check Route 53 → Registered d
 
 ---
 
-## 11. Future Improvements
+## 12. Future Improvements
 
 Ideas for the next team to consider:
 
@@ -364,7 +441,7 @@ Ideas for the next team to consider:
 
 ---
 
-## 12. Contact & Handover Notes
+## 13. Contact & Handover Notes
 
 ### Current Maintainer
 

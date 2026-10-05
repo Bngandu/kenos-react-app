@@ -9,6 +9,7 @@ import About from "./components/About";
 import Timeline from "./components/Timeline";
 import KIOFM from "./components/KIOFM";
 import MOYGA from "./components/MOYGA";
+import Media from "./components/Media";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
@@ -28,6 +29,7 @@ export default function App() {
         <Timeline />
         <KIOFM />
         <MOYGA />
+        <Media />
         <Contact />
       </main>
       <Footer />
