@@ -1,6 +1,6 @@
 # Kenos Tabernacle Ministry — Website Administration & Handover Guide
 
-**Document Version:** 1.1  
+**Document Version:** 1.2  
 **Date:** October 2026  
 **Prepared by:** Billy Ngandu  
 **Website:** https://ktmnewhorizon.co.za  
@@ -245,33 +245,151 @@ Edit `src/index.css` — the `@theme` block at the top defines all colors:
 
 ## 7. Deployment Process
 
-### Step 1: Build for Production
+Deploying a change involves two independent things:
+
+1. **Save the source code** → commit and push to GitHub (keeps the repo and this
+   guide up to date). This does NOT change the live site.
+2. **Publish the site** → build, upload the build to S3, and invalidate the
+   CloudFront cache. This is what actually updates the live website.
+
+The live site is served from S3/CloudFront, NOT from GitHub. So pushing to
+GitHub alone will not update the website, and deploying to S3 without pushing
+will leave the repo out of sync. Do both.
+
+> **Project directory (all commands run here):**
+> `/Users/cizubub/Downloads/ktm-website`
+>
+> Every `cd` and command below assumes this path. Adjust if the project is
+> cloned elsewhere.
+
+---
+
+### Reference values
+
+| Item | Value |
+|------|-------|
+| Project directory | `/Users/cizubub/Downloads/ktm-website` |
+| S3 bucket | `ktmnewhorizon.co.za` (region `af-south-1`) |
+| CloudFront distribution ID | `E2ASAV7XPVK0PG` |
+| AWS CLI profile | `ktmadmin` (account `995869199809`) |
+| GitHub repo | `https://github.com/Bngandu/kenos-react-app` (branch `main`) |
+
+---
+
+### Part A: Commit & push the source to GitHub
+
+Run from the project directory:
 
 ```bash
-cd /path/to/ktm-website
+cd /Users/cizubub/Downloads/ktm-website
+
+# See what changed
+git status
+
+# Stage the files you changed (list them, or use "git add -A" for everything)
+git add <file1> <file2>
+
+# Commit with a short message describing the change
+git commit -m "Describe what changed"
+
+# Push to GitHub
+git push origin main
+```
+
+**One-time GitHub authentication:** GitHub no longer accepts a password for
+`git push`. Authentication on this machine is set up via the GitHub CLI:
+
+```bash
+gh auth login
+# Choose: GitHub.com  ->  HTTPS  ->  Authenticate Git: Yes  ->  Login with a web browser
+gh auth setup-git
+```
+
+Once done, the token is stored in the macOS keychain and `git push` works
+without prompting. You only need to redo this if the token is revoked.
+
+---
+
+### Part B (recommended): Deploy via the AWS CLI
+
+This is the fast path and is what the site was last deployed with. Run from the
+project directory.
+
+```bash
+cd /Users/cizubub/Downloads/ktm-website
+
+# 1. Build the production files into dist/
+npm run build
+
+# 2. (Optional) Preview exactly what will change in S3 before doing it
+aws s3 sync dist/ s3://ktmnewhorizon.co.za/ --delete --dryrun --profile ktmadmin
+
+# 3. Upload the build to S3 (mirrors dist/ exactly, removing stale files)
+aws s3 sync dist/ s3://ktmnewhorizon.co.za/ --delete --profile ktmadmin
+
+# 4. Invalidate the CloudFront cache so visitors get the new version
+aws cloudfront create-invalidation \
+  --distribution-id E2ASAV7XPVK0PG \
+  --paths "/*" \
+  --profile ktmadmin
+
+# 5. Verify the live site is serving the new build
+curl -s https://ktmnewhorizon.co.za/ | grep -oE 'assets/index-[A-Za-z0-9_-]+\.(js|css)'
+```
+
+Notes:
+- `--delete` makes S3 match `dist/` exactly, removing the old hashed JS/CSS
+  bundles that are no longer referenced. This is correct and intended. The
+  bucket has versioning enabled, so deletions are recoverable if needed.
+- The CloudFront invalidation takes ~2-5 minutes to propagate across edge
+  locations.
+
+**One-time AWS CLI setup** (if the `ktmadmin` profile is not configured on the
+machine):
+
+```bash
+aws configure --profile ktmadmin
+# AWS Access Key ID:      (from the ktmadmin access key)
+# AWS Secret Access Key:  (from the ktmadmin access key)
+# Default region name:    af-south-1
+# Default output format:  json
+
+# Confirm it points at the right account (should show user/ktmadmin, account 995869199809)
+aws sts get-caller-identity --profile ktmadmin
+```
+
+---
+
+### Part C (alternative): Deploy via the AWS Console
+
+Use this if you prefer the web console or the CLI is unavailable. The build step
+(`npm run build`) still has to be run in the project directory first.
+
+```bash
+cd /Users/cizubub/Downloads/ktm-website
 npm run build
 ```
 
-This generates optimized files in the `dist/` folder.
+Then:
 
-### Step 2: Upload to S3
-
-1. Open AWS Console → S3 → `ktmnewhorizon.co.za`
+**Upload to S3**
+1. Open AWS Console → S3 → bucket `ktmnewhorizon.co.za`
 2. Delete the old `index.html` from the bucket root
 3. Delete the old files inside the `assets/` folder
-4. Upload new `dist/index.html` to the bucket root
-5. Upload new files from `dist/assets/` into the `assets/` folder
+4. Upload the new `dist/index.html` to the bucket root
+5. Upload the new files from `dist/assets/` into the `assets/` folder
 
-**IMPORTANT:** Always upload from the `dist/` folder, NEVER the project root `index.html`.
+**IMPORTANT:** Always upload from the `dist/` folder, NEVER the project root
+`index.html` (that one is a dev entry point and will produce a blank page).
 
-### Step 3: Invalidate CloudFront Cache
-
-1. Open AWS Console → CloudFront → `ktmnewhorizon-website`
-2. Go to **Invalidations** tab
+**Invalidate CloudFront**
+1. Open AWS Console → CloudFront → distribution `E2ASAV7XPVK0PG`
+2. Go to the **Invalidations** tab
 3. Click **Create invalidation**
 4. Path: `/*`
-5. Click **Create invalidation**
-6. Wait 2-5 minutes for changes to propagate
+5. Click **Create invalidation** and wait 2-5 minutes
+
+---
 
 ### Step 4: Verify
 
