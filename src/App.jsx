@@ -13,6 +13,7 @@ import Media from "./components/Media";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
+import CookieNotice from "./components/CookieNotice";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
       </main>
       <Footer />
       <BackToTop />
+      <CookieNotice />
     </div>
   );
 }
